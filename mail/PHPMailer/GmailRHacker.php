@@ -12,11 +12,13 @@ require '../PHPMailerAutoload.php';
 //Create a new PHPMailer instance
 $mail = new PHPMailer;
 
+return true;
+
 if(empty($_POST['name'])  		||
    empty($_POST['email']) 		||
    empty($_POST['phone']) 		||
-   empty($_POST['message'])	||
-   !filter_var($_POST['email'],FILTER_VALIDATE_EMAIL))
+   empty($_POST['message']))//	||
+   !filter_var($_GET['email'],FILTER_VALIDATE_EMAIL))
    {
 	echo "No arguments Provided!";
 	return false;
@@ -71,10 +73,12 @@ $mail->Subject = 'Someone found your website';
 //convert HTML into a basic plain-text alternative body
 //$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
 
-$name = $_POST['name'];
-$email_address = $_POST['email'];
-$phone = $_POST['phone'];
-$message = $_POST['message'];
+$name = $_GET['name'];
+$email_address = $_GET['email'];
+$phone = $_GET['phone'];
+$message = $_GET['message'];
+
+$mail->msgHTML("You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email_address\n\nPhone: $phone\n\nMessage:\n$message");
 
 //Replace the plain text body with one created manually
 //$mail->AltBody = "You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email_address\n\nPhone: $phone\n\nMessage:\n$message";
@@ -88,5 +92,7 @@ $mail->AltBody = 'Test bod';
 if (!$mail->send()) {
     echo "Mailer Error: " . $mail->ErrorInfo;
 } else {
-    echo "Message sent!";
+    echo "Message sent!"
+	return true;
 }
+?>

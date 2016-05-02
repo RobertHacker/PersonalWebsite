@@ -21,7 +21,7 @@ $(function() {
                 firstName = name.split(' ').slice(0, -1).join(' ');
             }
             $.ajax({
-                url: "././mail/PHPMailer/examples/GmailRHacker.php",
+                url: "https://github.com/RobertHacker/roberthacker.github.io/tree/master/mail/contact_me.php",
                 type: "POST",
                 data: {
                     name: name,
